@@ -1,0 +1,16 @@
+# environment variables:
+AFL_AUTORESUME=1
+AFL_CMPLOG_ONLY_NEW=1
+AFL_CUSTOM_INFO_PROGRAM=./target/afl/debug/ethfuzz/
+AFL_CUSTOM_INFO_PROGRAM_ARGV=
+AFL_CUSTOM_INFO_OUT=output/ethfuzz//afl/mainaflfuzzer
+AFL_DISABLE_TRIM=1
+AFL_FAST_CAL=1
+AFL_FORCE_UI=1
+AFL_FUZZER_STATS_UPDATE_INTERVAL=10
+AFL_IGNORE_UNKNOWN_ENVS=1
+AFL_IMPORT_FIRST=1
+AFL_NO_WARN_INSTABILITY=1
+AFL_TESTCACHE_SIZE=100
+# command line:
+'/Users/kevinvalerio/.local/share/afl.rs/rustc-1.73.0-nightly-474709a/afl.rs-0.13.3/afl/bin/afl-fuzz' '-c0' '-Mmainaflfuzzer' '-i./output/ethfuzz//shared_corpus/' '-pfast' '-ooutput/ethfuzz//afl' '-g1' '-G1048576' '-F./output/ethfuzz//shared_corpus' '-V79205' '-l2' '-xmagic.dict' './target/afl/debug/ethfuzz/'

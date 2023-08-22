@@ -1,0 +1,5 @@
+awk: syntax error at source line 356 source file -
+ context is
+	/"infilesSmallToBigFull[cnt] >> >>>  tmpfile"." <<< instance
+awk: illegal statement at source line 356 source file -
+awk: illegal statement at source line 356 source file -

@@ -1,0 +1,15 @@
+[package]
+name = "ethfuzz"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ziggy = "0.6.4"
+ethereum = { path=".." }
+hex = "0.4.3"
+#hex-literal = "0.4.1"
+frame-support = "22.0.0"
+hex-literal = "0.4.1"
+ethereum-types = { version = "0.14", default-features = false, features = ["rlp", "codec"] }
