@@ -8,17 +8,17 @@ use ethereum::TransactionAction;
 use ethereum::TransactionV1;
 use ethereum::*;
 
-use ethereum_types::{Address, H160, H256, U256};
+use ethereum::util::Hash256RlpTrieStream;
+use ethereum_types::{Address, Bloom, H160, H256, U256};
 use frame_support::traits::Bounded::Legacy;
 use frame_support::*;
 use hex::*;
 use hex_literal::hex;
 use ziggy;
-use ethereum::util::Hash256RlpTrieStream;
 
 fn main() {
 	ziggy::fuzz!(|data: &[u8]| {
-		if &data.len() < &501 {
+		if &data.len() < &666 {
 			return;
 		}
 		println!("{:?}", &data);
@@ -104,7 +104,6 @@ fn main() {
 		let msg = EIP1559TransactionMessage::from(eip2.clone());
 		let msg2 = EIP2930TransactionMessage::from(eip.clone());
 
-
 		let eip3 = LegacyTransaction {
 			nonce: U256::from(&data[0..4]),
 			gas_price: U256::from(&data[0..20]),
@@ -116,7 +115,6 @@ fn main() {
 		};
 
 		eip3.encode();
-		let xx2 = Hash256RlpTrieStream::new();
 		// xx2.
 		// println!("{:#?}", &eip);
 
@@ -155,7 +153,25 @@ fn main() {
 			signature: real_sign.clone(),
 		};
 
+		let _ = ReceiptV3::EIP2930(EIP658ReceiptData {
+			status_code: data[44],
+			used_gas: U256::from(&data[66..69]),
+			logs_bloom: Bloom::repeat_byte(data[230]),
+			logs: vec![
+				Log {
+					address: H160(data[8..28].try_into().unwrap()),
+					topics: vec![H256(data[320..352].try_into().unwrap()); 100],
+					data: data[32..288].to_vec(),
+				};
+				255
+			],
+		});
 		// assert_err!(sign);
+		<ReceiptV3 as EnvelopedDecodable>::decode(&data[320..320 + 255]);
+		<ReceiptV2 as EnvelopedDecodable>::decode(&data[355..355 + 255]);
+		<ReceiptAny as EnvelopedDecodable>::decode(&data[411..411 + 255]);
+		<ReceiptV1 as EnvelopedDecodable>::decode(&data[324..324 + 255]);
+		<ReceiptV0 as EnvelopedDecodable>::decode(&data[111..111 + 255]);
 
 		assert_eq!(
 			txxx,
